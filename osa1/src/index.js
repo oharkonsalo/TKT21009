@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 class App extends React.Component {
+    
     constructor(props) {
       super(props)
       this.state = {
@@ -9,8 +10,9 @@ class App extends React.Component {
         neutraali: 0,
         huono: 0
       }
+
     }
-  
+    
     klikHyva = () => {
       this.setState({
         hyva: this.state.hyva + 1
@@ -26,27 +28,43 @@ class App extends React.Component {
         huono: this.state.huono + 1
       })
     }
-  
+    
     render() {
-      const keskiArvo = () => {
-            
-            return (this.state.hyva * 1 + this.state.neutraali * 0 + this.state.huono * -1) / (this.state.hyva + this.state.neutraali + this.state.huono)
-      }
+      const Button = ({ handleClick, text }) => (
+            <button onClick={handleClick}>
+              {text}
+            </button>
+       )
+       const Statistics = ({ luku, text }) => {
+        return (
+            <p>{text} {luku}</p>
+        )
+       } 
+       const Statistic = ({ luku, text }) => {
+        return (
+            <p>{text} {luku}</p>
+        )
+       } 
+  
 
       return (
         <div>
           <div>
           <h1>Anna palautetta</h1>
-            <button onClick={this.klikHyva}>Hyvä</button>
-            <button onClick={this.klikNeutraali}>Neutraali</button>
-            <button onClick={this.klikHuono}>Huono</button>
+            <Button handleClick={this.klikHyva} text="Hyvä"/>
+            <Button handleClick={this.klikNeutraali} text="Neutraali"/>
+            <Button handleClick={this.klikHuono} text="Huono"/>
+           
             <h1>Statistiikka</h1>
+            <Statistics luku={this.state.hyva} text="Hyvä"/>
+            <Statistics luku={this.state.neutraali} text="Neutraali"/>
+            <Statistics luku={this.state.huono} text="Huono"/>
+           
+           
+            <Statistic luku={((this.state.hyva * 1) + (this.state.neutraali * 0) + (this.state.huono * -1))/(this.state.hyva + this.state.neutraali + this.state.huono)} text="Keskiarvo"/>
+            <Statistic luku={(this.state.hyva / (this.state.neutraali + this.state.huono + this.state.hyva))*100} text="Positiivisia"/>
 
-            <p>Hyvä {this.state.hyva}</p>
-            <p>Neutraali {this.state.neutraali}</p>
-            <p>Huono {this.state.huono}</p>
-            <p>Keskiarvo {((this.state.hyva * 1) + (this.state.neutraali * 0) + (this.state.huono * -1))/(this.state.hyva + this.state.neutraali + this.state.huono)}</p>
-            <p>Positiivisia {(this.state.hyva / (this.state.neutraali + this.state.huono + this.state.hyva))*100}</p>
+     
           </div>
         </div>
       )
