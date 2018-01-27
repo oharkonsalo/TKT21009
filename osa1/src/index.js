@@ -37,12 +37,21 @@ class App extends React.Component {
        )
        const Statistics = ({ luku, text }) => {
         return (
-            <p>{text} {luku}</p>
+          <tr>
+            <td>{text}</td>
+            <td>{luku}</td>
+           
+          </tr>
+            
         )
        } 
        const Statistic = ({ luku, text }) => {
         return (
-            <p>{text} {luku}</p>
+          <tr>
+            <td>{text}</td>
+            <td>{luku} </td>
+           
+          </tr>
         )
        } 
        const KonditionaalinenRenderointi = () => {
@@ -55,16 +64,22 @@ class App extends React.Component {
         }
         return (
           <div>
-            <Statistics luku={this.state.hyva} text="Hyvä"/>
-            <Statistics luku={this.state.neutraali} text="Neutraali"/>
-            <Statistics luku={this.state.huono} text="Huono"/>
+            <table>
+             <tbody>
+              <Statistics luku={this.state.hyva} text="Hyvä"/>
+              <Statistics luku={this.state.neutraali} text="Neutraali"/>
+              <Statistics luku={this.state.huono} text="Huono"/>
            
            
-            <Statistic luku={((this.state.hyva * 1) + (this.state.neutraali * 0) + (this.state.huono * -1))/(this.state.hyva + this.state.neutraali + this.state.huono)} text="Keskiarvo"/>
-            <Statistic luku={(this.state.hyva / (this.state.neutraali + this.state.huono + this.state.hyva))*100} text="Positiivisia"/>
+              <Statistic luku={((this.state.hyva * 1) + (this.state.neutraali * 0) + (this.state.huono * -1))/(this.state.hyva + this.state.neutraali + this.state.huono)} text="Keskiarvo"/>
+              <Statistic luku={((this.state.hyva / (this.state.neutraali + this.state.huono + this.state.hyva))*100)} text="Positiivisia"/>
+            </tbody>
+           </table>
           </div>
+          
         )
       }
+
   
       return (
         <div>
