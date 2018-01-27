@@ -45,11 +45,11 @@ class App extends React.Component {
             
         )
        } 
-       const Statistic = ({ luku, text }) => {
+       const Statistic = ({ luku, paate, text }) => {
         return (
           <tr>
             <td>{text}</td>
-            <td>{luku} </td>
+            <td>{luku} {paate}</td>
            
           </tr>
         )
@@ -72,7 +72,7 @@ class App extends React.Component {
            
            
               <Statistic luku={((this.state.hyva * 1) + (this.state.neutraali * 0) + (this.state.huono * -1))/(this.state.hyva + this.state.neutraali + this.state.huono)} text="Keskiarvo"/>
-              <Statistic luku={((this.state.hyva / (this.state.neutraali + this.state.huono + this.state.hyva))*100)} text="Positiivisia"/>
+              <Statistic luku={((this.state.hyva / (this.state.neutraali + this.state.huono + this.state.hyva))*100)} text="Positiivisia" paate="%"/>
             </tbody>
            </table>
           </div>
