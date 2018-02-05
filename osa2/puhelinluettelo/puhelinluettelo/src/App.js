@@ -57,21 +57,23 @@ class App extends React.Component {
     console.log(alreadyExists)
     if (alreadyExists===undefined) {
       
-     const noteObject = {
+     const personObject = {
        name: this.state.newName,
        id: this.state.newName,
        number: this.state.newNumber
      }
-  
-     const persons = this.state.persons.concat(noteObject)
-    
-     this.setState({
-       persons,
-       newName: '',
-       newNumber: ''
-       
+     axios
+     .post('http://localhost:3001/persons', personObject)
+     .then(response => {
+       this.setState({
+         persons: this.state.persons.concat(response.data),
+         newName: '',
+         newNumber: ''
+       })
      })
-     console.log(persons)
+
+
+     
     }   
     this.setState({
       newName: '',
