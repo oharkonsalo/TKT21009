@@ -55,7 +55,29 @@ class App extends React.Component {
     
 
   }
-
+  
+  removePerson = (id) => {
+   return () => {
+    const person = this.state.persons.filter((person) => person.id === id)
+    console.log(person)
+    const name = person[0].name
+    console.log(name)
+    let temp = ' '+ name
+    let message = 'poistetaanko' + temp
+    if (window.confirm(message)) { 
+        
+     peopleService
+       .remove(id)
+       .then(response => {
+         this.setState({
+           persons: this.state.persons.filter((person) => person.id !== id)
+         })
+       })
+      
+    
+    }
+  }
+ }
   addName = (event) => {
     event.preventDefault()
  /*
@@ -95,6 +117,7 @@ class App extends React.Component {
      })
 
 */
+   
      
     }   
     this.setState({
@@ -141,7 +164,7 @@ class App extends React.Component {
         <table>  
          <tbody>
 
-          {persons.map(person => <Persons key={person.name} person={person} />)}
+          {persons.map(person => <Persons key={person.name} person={person} removePerson={this.removePerson(person.id)}/>)}
         </tbody>
        </table>
         
