@@ -1,7 +1,7 @@
 import React from 'react';
 import Persons from './components/Persons'
 import peopleService from './services/People'
-import axios from 'axios'
+import './index.css'
 
 class App extends React.Component {
   constructor(props) {
@@ -10,7 +10,8 @@ class App extends React.Component {
       persons: [],
       newName: '',
       newNumber: '',
-      filter: ''
+      filter: '',
+      success: ''
     }
   }
    /*
@@ -70,11 +71,14 @@ class App extends React.Component {
        .remove(id)
        .then(response => {
          this.setState({
-           persons: this.state.persons.filter((person) => person.id !== id)
+           persons: this.state.persons.filter((person) => person.id !== id),
+           success: 'onnistui'
          })
        })
       
-    
+      setTimeout(() => {
+        this.setState({success: null})
+      }, 5000)     
     }
   }
  }
@@ -101,10 +105,13 @@ class App extends React.Component {
        this.setState({
          persons: this.state.persons.concat(response.data),
          newName: '',
-         newNumber: ''
+         newNumber: '',
+         success: 'onnistui'
        })
      })
-     
+     setTimeout(() => {
+      this.setState({success: null})
+     }, 5000)     
 /*
      axios
      .post('http://localhost:3001/persons', personObject)
@@ -116,20 +123,30 @@ class App extends React.Component {
        })
      })
 
-*/
-   
-     
-    }   
+*/  
+   }
+
     this.setState({
       newName: '',
       newNumber: ''
     })
-   }
-
+   
+  }
+  
   
   render() {
 
-
+    const Notification = ({ message }) => {
+      if (message === null) {
+         return null
+      }
+     return (
+       <div className="success">
+        {message}
+       </div>
+     )
+    
+    }   
   
     const persons =  this.state.persons.filter((person) => person.name.toLowerCase().search(this.state.filter.toLowerCase()) >= 0)
 
@@ -144,6 +161,8 @@ class App extends React.Component {
             onChange={this.handleSearch}
             />
         <h2>Puhelinluettelo</h2>
+        <Notification message={this.state.success}/>
+
         
         <form onSubmit={this.addName}>
           <div>
