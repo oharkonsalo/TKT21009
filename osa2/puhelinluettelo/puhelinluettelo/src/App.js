@@ -1,5 +1,6 @@
 import React from 'react';
 import Persons from './components/Persons'
+import peopleService from './services/People'
 import axios from 'axios'
 
 class App extends React.Component {
@@ -12,12 +13,21 @@ class App extends React.Component {
       filter: ''
     }
   }
+   /*
   componentDidMount() {
     console.log('will mount')
     axios
       .get('http://localhost:3001/persons')
       .then(response => {
         console.log('promise fulfilled')
+        this.setState({ persons: response.data })
+      })
+  }
+*/
+  componentDidMount() {
+    peopleService
+      .getAll()
+      .then(response => {
         this.setState({ persons: response.data })
       })
   }
@@ -62,6 +72,18 @@ class App extends React.Component {
        id: this.state.newName,
        number: this.state.newNumber
      }
+
+     peopleService
+     .create(personObject)
+     .then(response => {
+       this.setState({
+         persons: this.state.persons.concat(response.data),
+         newName: '',
+         newNumber: ''
+       })
+     })
+     
+/*
      axios
      .post('http://localhost:3001/persons', personObject)
      .then(response => {
@@ -72,7 +94,7 @@ class App extends React.Component {
        })
      })
 
-
+*/
      
     }   
     this.setState({
